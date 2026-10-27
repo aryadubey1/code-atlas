@@ -1,0 +1,252 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/aryadubey1/code-atlas/data/site.schema.json",
+  "title": "Code Atlas data",
+  "description": "Everything the Code Atlas page shows. See docs/data-format.md.",
+  "type": "object",
+  "required": ["updated", "project", "stages", "departments", "tickets", "bugs", "concepts", "timeline"],
+  "$defs": {
+    "status": { "enum": ["worked", "investigating", ""], "description": "worked = code written, investigating = mockup or read, empty = not yet" },
+    "date": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+    "ticketId": { "type": "string", "minLength": 1 },
+    "link": {
+      "type": "object", "required": ["label", "url"],
+      "properties": { "label": { "type": "string" }, "url": { "type": "string" } }
+    },
+    "image": {
+      "type": "object", "required": ["img"],
+      "properties": {
+        "img": { "type": "string" }, "alt": { "type": "string" }, "cap": { "type": "string" },
+        "w": { "type": "integer" }, "h": { "type": "integer" }
+      }
+    },
+    "shot": {
+      "type": "object", "required": ["img"],
+      "properties": { "img": { "type": "string" }, "cap": { "type": "string" } }
+    },
+    "pairTable": {
+      "type": "object", "required": ["title", "head", "rows"],
+      "properties": {
+        "title": { "type": "string" }, "intro": { "type": "string" }, "count": { "type": "string" }, "proposal": { "type": "string" },
+        "head": { "type": "array", "items": { "type": "string" }, "minItems": 2, "maxItems": 2 },
+        "rows": { "type": "array", "items": { "type": "array", "items": { "type": "string" }, "minItems": 2, "maxItems": 2 } }
+      }
+    },
+    "wtSide": {
+      "type": "object", "required": ["label", "steps"],
+      "properties": {
+        "label": { "type": "string" }, "sub": { "type": "string" }, "unit": { "type": "string" },
+        "setting": { "$ref": "#/$defs/image" },
+        "steps": {
+          "type": "array",
+          "items": {
+            "type": "object", "required": ["t"],
+            "properties": {
+              "t": { "type": "string" }, "c": { "type": "string" }, "src": { "type": "string" },
+              "img": { "type": "string" }, "alt": { "type": "string" }, "cap": { "type": "string" },
+              "w": { "type": "integer" }, "h": { "type": "integer" }
+            }
+          }
+        }
+      }
+    },
+    "decisionItem": {
+      "type": "object", "required": ["key", "text"],
+      "properties": { "key": { "type": "string" }, "text": { "type": "string" } }
+    }
+  },
+  "properties": {
+    "$schema": { "type": "string" },
+    "updated": { "$ref": "#/$defs/date" },
+    "owner": { "type": "string" },
+    "project": {
+      "type": "object", "required": ["name"],
+      "properties": {
+        "name": { "type": "string", "description": "Shown in the hero: \"Where I've worked in <name>\"" },
+        "title": { "type": "string", "description": "Site title and brand; defaults to \"<name> Atlas\"" },
+        "repo": { "type": "string" },
+        "team": { "type": "string" },
+        "eyebrow": { "type": "string" },
+        "lead": { "type": "string" },
+        "trackerName": { "type": "string", "description": "Label for the tracker field on a ticket, e.g. Jira, Linear, GitHub" },
+        "ticketPrefix": { "type": "string" }
+      }
+    },
+    "dailyLog": { "type": "string", "description": "Markdown file for the Day by day page" },
+    "decisionsDoc": { "type": "string" },
+    "stages": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+    "departments": {
+      "type": "array",
+      "items": {
+        "type": "object", "required": ["id", "name", "status", "about", "modules", "tickets", "touched"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9_-]+$" },
+          "name": { "type": "string" },
+          "emoji": { "type": "string" },
+          "icon": { "enum": ["receipt", "people", "cloche", "boxes", "card", "plug", "screen", "chart", "sliders", "chat", "key", "pipes", "mail", "book", "cart", "truck", "flag"] },
+          "pigment": { "enum": ["coral", "pink", "honey", "sage", "mint", "sky", "peach", "lilac", "ice", "orchid", "sand", "teal"] },
+          "place": { "type": "array", "items": { "type": "integer", "minimum": 1 }, "minItems": 2, "maxItems": 2, "description": "[column 1-4, row] on wide screens" },
+          "status": { "$ref": "#/$defs/status" },
+          "about": { "type": "string" },
+          "modules": { "type": "array", "items": { "type": "array", "prefixItems": [{ "type": "string" }, { "$ref": "#/$defs/status" }], "minItems": 2, "maxItems": 2 } },
+          "tickets": { "type": "array", "items": { "$ref": "#/$defs/ticketId" } },
+          "touched": {
+            "type": "array",
+            "items": {
+              "type": "object", "required": ["ticket", "lines"],
+              "properties": { "ticket": { "$ref": "#/$defs/ticketId" }, "lines": { "type": "array", "items": { "type": "string" } } }
+            }
+          }
+        }
+      }
+    },
+    "tickets": {
+      "type": "array",
+      "items": {
+        "type": "object", "required": ["id", "title", "oneLine", "status", "areas", "notes", "now", "done", "next"],
+        "properties": {
+          "id": { "$ref": "#/$defs/ticketId" },
+          "was": { "type": "string", "description": "Previous id, if the ticket was re-keyed" },
+          "emoji": { "type": "string" },
+          "illo": { "enum": ["messages", "notes", "scan"], "description": "Illustration preset; omit for the default route-through-areas drawing" },
+          "illoText": { "type": "string" },
+          "illoLabel": { "type": "string" },
+          "title": { "type": "string" },
+          "oneLine": { "type": "string" },
+          "askedBy": { "type": "string" },
+          "tracker": { "type": "string" },
+          "status": { "type": "string" },
+          "branch": { "type": "string" },
+          "commit": { "type": "string" },
+          "mockup": { "type": "string" },
+          "areas": { "type": "array", "items": { "type": "string" } },
+          "notes": { "type": "string" },
+          "extra": { "type": "array", "items": { "type": "object", "required": ["label", "file"], "properties": { "label": { "type": "string" }, "file": { "type": "string" } } } },
+          "now": { "type": "string" },
+          "done": { "type": "array", "items": { "type": "string" } },
+          "next": { "type": "array", "items": { "type": "string" } },
+          "dod": {
+            "type": "array",
+            "items": {
+              "type": "object", "required": ["step", "state"],
+              "properties": { "step": { "type": "string" }, "state": { "enum": ["done", "doing", "todo"] }, "note": { "type": "string" } }
+            }
+          },
+          "links": { "type": "array", "items": { "$ref": "#/$defs/link" } },
+          "walkthrough": {
+            "type": "object", "required": ["title", "before", "after"],
+            "properties": {
+              "title": { "type": "string" }, "count": { "type": "string" }, "summary": { "type": "string" },
+              "sources": { "type": "object", "additionalProperties": { "type": "string" } },
+              "start": { "$ref": "#/$defs/image" },
+              "before": { "$ref": "#/$defs/wtSide" }, "after": { "$ref": "#/$defs/wtSide" },
+              "unchanged": { "type": "string" }, "note": { "type": "string" }
+            }
+          },
+          "angles": {
+            "allOf": [{ "$ref": "#/$defs/pairTable" }],
+            "properties": { "sub": { "$ref": "#/$defs/pairTable" } }
+          }
+        }
+      }
+    },
+    "bugsPage": {
+      "type": "object",
+      "properties": { "eyebrow": { "type": "string" }, "title": { "type": "string" }, "lead": { "type": "string" } }
+    },
+    "bugsNote": { "type": "string" },
+    "bugs": {
+      "type": "array",
+      "items": {
+        "type": "object", "required": ["n", "title", "release", "review", "what", "example", "result", "tested"],
+        "properties": {
+          "n": { "type": "integer" }, "title": { "type": "string" },
+          "release": { "type": "boolean" }, "review": { "type": "boolean" },
+          "pr": { "type": "string" }, "when": { "type": "string" },
+          "what": { "type": "string" }, "example": { "type": "string" }, "result": { "type": "string" }, "tested": { "type": "string" }
+        }
+      }
+    },
+    "concepts": {
+      "type": "array",
+      "items": {
+        "type": "object", "required": ["term", "line", "pic", "tickets"],
+        "properties": { "term": { "type": "string" }, "line": { "type": "string" }, "pic": { "type": "string" }, "tickets": { "type": "array", "items": { "$ref": "#/$defs/ticketId" } } }
+      }
+    },
+    "timeline": {
+      "type": "array",
+      "description": "Newest day first",
+      "items": {
+        "type": "object", "required": ["date", "items"],
+        "properties": {
+          "date": { "$ref": "#/$defs/date" },
+          "items": { "type": "array", "items": { "type": "array", "prefixItems": [{ "type": "string" }, { "type": "string" }], "minItems": 2, "maxItems": 2 } }
+        }
+      }
+    },
+    "repos": {
+      "type": "array",
+      "items": {
+        "type": "object", "required": ["id", "name", "about", "notes"],
+        "properties": { "id": { "type": "string" }, "name": { "type": "string" }, "emoji": { "type": "string" }, "icon": { "type": "string" }, "about": { "type": "string" }, "notes": { "type": "string" } }
+      }
+    },
+    "upcoming": {
+      "type": "array",
+      "items": { "type": "object", "required": ["title"], "properties": { "title": { "type": "string" }, "note": { "type": "string" } } }
+    },
+    "meeting": {
+      "type": "object", "required": ["date", "title", "purpose", "opening", "collection", "tickets"],
+      "properties": {
+        "nav": { "type": "string" }, "date": { "$ref": "#/$defs/date" }, "eyebrow": { "type": "string" },
+        "title": { "type": "string" }, "purpose": { "type": "string" }, "opening": { "type": "string" },
+        "collection": { "type": "string", "description": "Storage namespace for the decisions typed during the meeting" },
+        "tickets": {
+          "type": "array",
+          "items": {
+            "type": "object", "required": ["id", "title", "what", "rows"],
+            "properties": {
+              "id": { "$ref": "#/$defs/ticketId" }, "title": { "type": "string" }, "what": { "type": "string" },
+              "mockup": { "type": "string" },
+              "links": { "type": "array", "items": { "$ref": "#/$defs/link" } },
+              "refs": { "type": "array", "items": { "$ref": "#/$defs/link" } },
+              "strip": { "type": "array", "items": { "$ref": "#/$defs/shot" } },
+              "rows": {
+                "type": "array",
+                "items": {
+                  "type": "object", "required": ["key", "q", "propose", "fallback"],
+                  "properties": {
+                    "key": { "type": "string" }, "q": { "type": "string" }, "propose": { "type": "string" }, "fallback": { "type": "string" },
+                    "link": { "type": "string" }, "shots": { "type": "array", "items": { "$ref": "#/$defs/shot" } }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "ops": {
+          "type": "object",
+          "properties": {
+            "title": { "type": "string" },
+            "groups": {
+              "type": "array",
+              "items": {
+                "type": "object", "required": ["ticket", "title", "items"],
+                "properties": { "ticket": { "type": "string" }, "title": { "type": "string" }, "items": { "type": "array", "items": { "$ref": "#/$defs/decisionItem" } } }
+              }
+            }
+          }
+        },
+        "extra": {
+          "type": "object", "required": ["id", "title", "what", "shots"],
+          "properties": { "id": { "type": "string" }, "title": { "type": "string" }, "what": { "type": "string" }, "refs": { "type": "array", "items": { "$ref": "#/$defs/link" } }, "shots": { "type": "array", "items": { "$ref": "#/$defs/shot" } } }
+        },
+        "devops": { "type": "array", "items": { "$ref": "#/$defs/decisionItem" } },
+        "devopsTitle": { "type": "string" },
+        "questions": { "type": "array", "items": { "type": "array", "items": { "type": "string" }, "minItems": 2, "maxItems": 2 } },
+        "after": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}

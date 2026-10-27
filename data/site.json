@@ -1,0 +1,1202 @@
+{
+  "$schema": "./site.schema.json",
+  "updated": "2026-10-26",
+  "owner": "Jordan Lee (demo)",
+  "project": {
+    "name": "Northwind Books",
+    "title": "Northwind Atlas",
+    "repo": "northwind-web",
+    "team": "Storefront team",
+    "eyebrow": "northwind-web · Storefront team · personal",
+    "trackerName": "Linear",
+    "ticketPrefix": "NB-"
+  },
+  "dailyLog": "notes/daily-log.md",
+  "decisionsDoc": "",
+  "stages": [
+    "Analyse",
+    "Mockup",
+    "Review",
+    "Plan",
+    "Build",
+    "PR",
+    "Merged",
+    "Released"
+  ],
+  "departments": [
+    {
+      "id": "storefront",
+      "name": "Storefront",
+      "icon": "cart",
+      "pigment": "coral",
+      "place": [
+        1,
+        1
+      ],
+      "status": "investigating",
+      "about": "What shoppers see: home page, book pages, cart and wishlists.",
+      "modules": [
+        [
+          "home",
+          ""
+        ],
+        [
+          "book_page",
+          "investigating"
+        ],
+        [
+          "cart",
+          "investigating"
+        ],
+        [
+          "wishlist",
+          ""
+        ],
+        [
+          "reviews",
+          ""
+        ],
+        [
+          "gift_cards",
+          "investigating"
+        ]
+      ],
+      "tickets": [
+        "NB-418"
+      ],
+      "touched": []
+    },
+    {
+      "id": "checkout",
+      "name": "Checkout & Payments",
+      "icon": "card",
+      "pigment": "mint",
+      "place": [
+        2,
+        1
+      ],
+      "status": "investigating",
+      "about": "Paying for an order: cards, store credit, taxes and receipts.",
+      "modules": [
+        [
+          "payments",
+          "investigating"
+        ],
+        [
+          "store_credit",
+          ""
+        ],
+        [
+          "taxes",
+          ""
+        ],
+        [
+          "receipts",
+          "investigating"
+        ],
+        [
+          "refunds",
+          ""
+        ]
+      ],
+      "tickets": [
+        "NB-412",
+        "NB-418"
+      ],
+      "touched": []
+    },
+    {
+      "id": "catalog",
+      "name": "Catalog",
+      "icon": "book",
+      "pigment": "honey",
+      "place": [
+        3,
+        1
+      ],
+      "status": "worked",
+      "about": "Books, authors, editions, prices and the bulk CSV import.",
+      "modules": [
+        [
+          "file_import",
+          "worked"
+        ],
+        [
+          "bulk_import",
+          "worked"
+        ],
+        [
+          "editions",
+          "investigating"
+        ],
+        [
+          "authors",
+          ""
+        ],
+        [
+          "prices",
+          "investigating"
+        ],
+        [
+          "series",
+          ""
+        ]
+      ],
+      "tickets": [
+        "NB-421"
+      ],
+      "touched": [
+        {
+          "ticket": "NB-421",
+          "lines": [
+            "app/services/catalog/file_reader.rb (new)",
+            "app/jobs/catalog/read_file_job.rb (new)",
+            "app/models/import_draft.rb (new)"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "inventory",
+      "name": "Warehouse & Stock",
+      "icon": "boxes",
+      "pigment": "sage",
+      "place": [
+        4,
+        1
+      ],
+      "status": "investigating",
+      "about": "Stock per warehouse, transfers between them and reorder points.",
+      "modules": [
+        [
+          "warehouses",
+          "investigating"
+        ],
+        [
+          "stock_levels",
+          ""
+        ],
+        [
+          "transfers",
+          ""
+        ],
+        [
+          "reorder_points",
+          ""
+        ]
+      ],
+      "tickets": [
+        "NB-430"
+      ],
+      "touched": []
+    },
+    {
+      "id": "shipping",
+      "name": "Shipping",
+      "icon": "truck",
+      "pigment": "peach",
+      "place": [
+        1,
+        2
+      ],
+      "status": "",
+      "about": "Packing slips, carriers, tracking and delivery estimates.",
+      "modules": [
+        [
+          "packing_slips",
+          ""
+        ],
+        [
+          "carriers",
+          ""
+        ],
+        [
+          "tracking",
+          ""
+        ],
+        [
+          "delivery_estimates",
+          ""
+        ]
+      ],
+      "tickets": [],
+      "touched": []
+    },
+    {
+      "id": "admin",
+      "name": "Admin & Settings",
+      "icon": "sliders",
+      "pigment": "ice",
+      "place": [
+        2,
+        2
+      ],
+      "status": "worked",
+      "about": "The back office: every settings screen a store manager configures.",
+      "modules": [
+        [
+          "settings_catalog",
+          "worked"
+        ],
+        [
+          "settings_checkout",
+          "investigating"
+        ],
+        [
+          "settings_messages",
+          "worked"
+        ],
+        [
+          "staff",
+          "investigating"
+        ],
+        [
+          "roles",
+          ""
+        ]
+      ],
+      "tickets": [
+        "NB-412",
+        "NB-418",
+        "NB-421",
+        "NB-430"
+      ],
+      "touched": [
+        {
+          "ticket": "NB-412",
+          "lines": [
+            "app/views/admin/settings/messages.html.erb",
+            "config/locales/admin.*.yml"
+          ]
+        },
+        {
+          "ticket": "NB-421",
+          "lines": [
+            "app/views/admin/catalog/imports/new.html.erb",
+            "app/controllers/admin/catalog/imports_controller.rb"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "platform",
+      "name": "Platform",
+      "icon": "pipes",
+      "pigment": "teal",
+      "place": [
+        3,
+        2
+      ],
+      "status": "worked",
+      "about": "What runs underneath: background jobs, feature flags, file storage and the public API.",
+      "modules": [
+        [
+          "background_jobs",
+          "worked"
+        ],
+        [
+          "feature_flags",
+          "worked"
+        ],
+        [
+          "file_storage",
+          "worked"
+        ],
+        [
+          "public_api",
+          ""
+        ],
+        [
+          "events",
+          ""
+        ]
+      ],
+      "tickets": [
+        "NB-412",
+        "NB-421"
+      ],
+      "touched": [
+        {
+          "ticket": "NB-412",
+          "lines": [
+            "config/feature_flags.yml: gift_message_languages"
+          ]
+        },
+        {
+          "ticket": "NB-421",
+          "lines": [
+            "config/storage.yml: imports bucket",
+            "config/sidekiq.yml: catalog queue"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "integrations",
+      "name": "Integrations",
+      "icon": "plug",
+      "pigment": "sky",
+      "place": [
+        4,
+        2
+      ],
+      "status": "investigating",
+      "about": "Outside services: supplier feeds, marketplaces and accounting.",
+      "modules": [
+        [
+          "supplier_feeds",
+          "investigating"
+        ],
+        [
+          "marketplaces",
+          ""
+        ],
+        [
+          "accounting_export",
+          ""
+        ],
+        [
+          "ocr_service",
+          "investigating"
+        ]
+      ],
+      "tickets": [
+        "NB-421"
+      ],
+      "touched": []
+    },
+    {
+      "id": "customers",
+      "name": "Customers",
+      "icon": "people",
+      "pigment": "pink",
+      "place": [
+        1,
+        3
+      ],
+      "status": "",
+      "about": "Customer accounts, addresses, order history and loyalty points.",
+      "modules": [
+        [
+          "accounts",
+          ""
+        ],
+        [
+          "addresses",
+          ""
+        ],
+        [
+          "order_history",
+          ""
+        ],
+        [
+          "loyalty",
+          ""
+        ]
+      ],
+      "tickets": [],
+      "touched": []
+    },
+    {
+      "id": "notifications",
+      "name": "Notifications",
+      "icon": "chat",
+      "pigment": "orchid",
+      "place": [
+        2,
+        3
+      ],
+      "status": "worked",
+      "about": "Emails, SMS and packing-slip messages sent to shoppers.",
+      "modules": [
+        [
+          "email_templates",
+          "worked"
+        ],
+        [
+          "sms",
+          ""
+        ],
+        [
+          "gift_messages",
+          "worked"
+        ],
+        [
+          "translations",
+          "worked"
+        ]
+      ],
+      "tickets": [
+        "NB-412"
+      ],
+      "touched": [
+        {
+          "ticket": "NB-412",
+          "lines": [
+            "app/mailers/gift_mailer.rb",
+            "app/views/gift_mailer/*.{en,de,es,ja}.html.erb"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "auth",
+      "name": "Sign-in & Roles",
+      "icon": "key",
+      "pigment": "sand",
+      "place": [
+        3,
+        3
+      ],
+      "status": "investigating",
+      "about": "Staff sign-in, roles and which warehouses each person can see.",
+      "modules": [
+        [
+          "sessions",
+          ""
+        ],
+        [
+          "roles",
+          "investigating"
+        ],
+        [
+          "permissions",
+          "investigating"
+        ],
+        [
+          "sso",
+          ""
+        ]
+      ],
+      "tickets": [
+        "NB-430"
+      ],
+      "touched": []
+    },
+    {
+      "id": "reports",
+      "name": "Reports",
+      "icon": "chart",
+      "pigment": "lilac",
+      "place": [
+        4,
+        3
+      ],
+      "status": "",
+      "about": "Sales, stock and bestseller reports for managers.",
+      "modules": [
+        [
+          "sales",
+          ""
+        ],
+        [
+          "stock_report",
+          ""
+        ],
+        [
+          "bestsellers",
+          ""
+        ],
+        [
+          "exports",
+          ""
+        ]
+      ],
+      "tickets": [],
+      "touched": []
+    }
+  ],
+  "tickets": [
+    {
+      "id": "NB-421",
+      "emoji": "📄",
+      "illo": "scan",
+      "illoText": "CATALOG",
+      "title": "Import a catalog from a supplier PDF",
+      "oneLine": "Drop in a supplier's PDF or a photo of their price list and get a review grid instead of typing a CSV.",
+      "askedBy": "Priya (Catalog lead)",
+      "tracker": "NB-421 · In progress",
+      "status": "Build: review screen next",
+      "branch": "feature/catalog-file-import",
+      "commit": "3f9c2ab",
+      "mockup": "",
+      "areas": [
+        "catalog",
+        "admin",
+        "platform",
+        "integrations"
+      ],
+      "notes": "notes/NB-421.md",
+      "extra": [
+        {
+          "label": "Plan",
+          "file": "notes/NB-421-plan.md"
+        }
+      ],
+      "now": "Build",
+      "done": [
+        "Analyse",
+        "Mockup",
+        "Review",
+        "Plan"
+      ],
+      "next": [
+        "Build the review grid (New / Update / Fix)",
+        "Test with 5 real supplier PDFs",
+        "Open the PR once the grid is approved"
+      ],
+      "dod": [
+        {
+          "step": "Product approval",
+          "state": "done",
+          "note": "Approved by Priya, 19 Oct"
+        },
+        {
+          "step": "Docs: one-pager and spec",
+          "state": "done",
+          "note": "Spec published 21 Oct"
+        },
+        {
+          "step": "Architecture approval",
+          "state": "done",
+          "note": "Background job + draft table OK'd by Marcus"
+        },
+        {
+          "step": "Implement",
+          "state": "doing",
+          "note": "Reader and job done; review screen in progress"
+        },
+        {
+          "step": "Push to review (PR)",
+          "state": "todo",
+          "note": ""
+        }
+      ],
+      "links": [
+        {
+          "label": "Spec",
+          "url": "https://example.com/specs/nb-421"
+        }
+      ],
+      "walkthrough": {
+        "title": "Before → After: adding 40 books from a supplier",
+        "count": "3 steps → 2 steps",
+        "summary": "Same supplier price list on both sides: 40 books, 5 already in the catalog.",
+        "sources": {
+          "built": "built on the branch",
+          "mock": "mockup"
+        },
+        "before": {
+          "label": "Today",
+          "sub": "CSV only",
+          "unit": "steps",
+          "steps": [
+            {
+              "t": "Type every row into the CSV template",
+              "c": "One row per edition, by hand.",
+              "img": "assets/import-before-1.svg",
+              "alt": "Bulk CSV import screen",
+              "w": 480,
+              "h": 272
+            },
+            {
+              "t": "Upload and fix errors one by one",
+              "c": "The import stops at the first bad row.",
+              "img": "assets/import-before-2.svg",
+              "alt": "Import errors list",
+              "w": 480,
+              "h": 272
+            },
+            {
+              "t": "Upload again",
+              "c": "Repeat until every row passes."
+            }
+          ]
+        },
+        "after": {
+          "label": "With NB-421",
+          "sub": "PDF or photo",
+          "unit": "steps",
+          "steps": [
+            {
+              "t": "Drop the supplier file",
+              "c": "The reader finds the lines in the background.",
+              "src": "built",
+              "img": "assets/import-after-1.svg",
+              "alt": "Import from a file screen",
+              "w": 480,
+              "h": 272
+            },
+            {
+              "t": "Review and import",
+              "c": "New, Update and Fix rows, each one editable.",
+              "src": "mock",
+              "img": "assets/import-after-2.svg",
+              "alt": "Review grid",
+              "w": 480,
+              "h": 272
+            }
+          ],
+          "setting": {
+            "img": "assets/import-setting.svg",
+            "alt": "Catalog settings with Import from a file switched on",
+            "w": 480,
+            "h": 222,
+            "cap": "The new setting, off by default."
+          }
+        },
+        "unchanged": "The CSV import stays exactly as it is.",
+        "note": "Screens are wireframes for the demo."
+      },
+      "angles": {
+        "title": "Every angle",
+        "count": "6 cases",
+        "intro": "What happens to each kind of line the reader finds.",
+        "head": [
+          "Case",
+          "What happens"
+        ],
+        "rows": [
+          [
+            "New ISBN",
+            "Added as New, price and title prefilled"
+          ],
+          [
+            "ISBN already in the catalog",
+            "Shown as Update with old → new price"
+          ],
+          [
+            "No ISBN on the line",
+            "Shown as Fix; the manager types it in"
+          ],
+          [
+            "Price with a comma (12,50)",
+            "Read as 12.50"
+          ],
+          [
+            "Two lines, same ISBN",
+            "Merged into one row, flagged Decide"
+          ],
+          [
+            "Unreadable photo",
+            "Nothing imported; ask for a sharper photo"
+          ]
+        ],
+        "sub": {
+          "title": "Currencies",
+          "intro": "Supplier files sometimes mix currencies.",
+          "head": [
+            "Case",
+            "What happens"
+          ],
+          "rows": [
+            [
+              "Single currency",
+              "Used as is"
+            ],
+            [
+              "Mixed currencies",
+              "Flagged Decide per line"
+            ],
+            [
+              "No currency shown",
+              "Store default"
+            ]
+          ],
+          "proposal": "Proposal: convert nothing automatically in v1; flag and let the manager decide."
+        }
+      }
+    },
+    {
+      "id": "NB-412",
+      "emoji": "🌍",
+      "illo": "messages",
+      "title": "Gift messages in more languages",
+      "oneLine": "Shoppers write a gift message once; the email and packing slip go out in the store's language.",
+      "askedBy": "Elena (Customer care)",
+      "tracker": "NB-412 · In review",
+      "status": "PR open, waiting on review",
+      "branch": "feature/gift-message-languages",
+      "commit": "a81d0e4",
+      "mockup": "",
+      "areas": [
+        "checkout",
+        "notifications",
+        "admin",
+        "platform"
+      ],
+      "notes": "notes/NB-412.md",
+      "now": "PR",
+      "done": [
+        "Analyse",
+        "Mockup",
+        "Review",
+        "Plan",
+        "Build"
+      ],
+      "next": [
+        "Answer review comments",
+        "Turn the flag on for one pilot store",
+        "Add Japanese templates after the pilot"
+      ],
+      "dod": [
+        {
+          "step": "Product approval",
+          "state": "done",
+          "note": ""
+        },
+        {
+          "step": "Docs: one-pager and spec",
+          "state": "done",
+          "note": ""
+        },
+        {
+          "step": "Architecture approval",
+          "state": "done",
+          "note": "Behind the gift_message_languages flag"
+        },
+        {
+          "step": "Implement",
+          "state": "done",
+          "note": "4 languages, 18 specs green"
+        },
+        {
+          "step": "Push to review (PR)",
+          "state": "doing",
+          "note": "PR #2291 open"
+        }
+      ],
+      "links": []
+    },
+    {
+      "id": "NB-418",
+      "emoji": "🎁",
+      "illo": "notes",
+      "title": "Preset gift card amounts",
+      "oneLine": "One tap on 10, 25, 50 or 100 instead of typing an amount, with a custom amount still allowed.",
+      "askedBy": "Tom (Storefront PM)",
+      "tracker": "NB-418 · Todo",
+      "status": "Mockup shared, waiting on product",
+      "branch": "",
+      "commit": "",
+      "mockup": "",
+      "areas": [
+        "storefront",
+        "checkout",
+        "admin"
+      ],
+      "notes": "notes/NB-418.md",
+      "now": "Review",
+      "done": [
+        "Analyse",
+        "Mockup"
+      ],
+      "next": [
+        "Agree the default amounts with product",
+        "Decide the maximum number of buttons",
+        "Write the spec"
+      ],
+      "dod": [
+        {
+          "step": "Product approval",
+          "state": "doing",
+          "note": "Review meeting booked"
+        },
+        {
+          "step": "Docs: one-pager and spec",
+          "state": "todo",
+          "note": ""
+        },
+        {
+          "step": "Architecture approval",
+          "state": "todo",
+          "note": ""
+        },
+        {
+          "step": "Implement",
+          "state": "todo",
+          "note": ""
+        },
+        {
+          "step": "Push to review (PR)",
+          "state": "todo",
+          "note": ""
+        }
+      ],
+      "links": []
+    },
+    {
+      "id": "NB-430",
+      "emoji": "📦",
+      "title": "Staff see only their own warehouses",
+      "oneLine": "Warehouse staff pick stock only from the warehouses they're assigned to, with a switch for managers.",
+      "askedBy": "Marcus (Ops)",
+      "tracker": "NB-430 · Todo",
+      "status": "Plan drafted",
+      "branch": "",
+      "commit": "",
+      "mockup": "",
+      "areas": [
+        "inventory",
+        "admin",
+        "auth"
+      ],
+      "notes": "notes/NB-430.md",
+      "now": "Plan",
+      "done": [
+        "Analyse",
+        "Mockup",
+        "Review"
+      ],
+      "next": [
+        "Share the plan with Marcus",
+        "Add the per-store setting",
+        "Start the build"
+      ],
+      "dod": [],
+      "links": []
+    }
+  ],
+  "bugsPage": {
+    "eyebrow": "Found while planning NB-421",
+    "title": "Bugs I found",
+    "lead": "Three bugs in today's bulk CSV import, all reproduced locally with the real code."
+  },
+  "bugsNote": "Reported to the Catalog channel on 18 Oct.",
+  "bugs": [
+    {
+      "n": 1,
+      "title": "Prices with a comma are rejected",
+      "release": true,
+      "review": true,
+      "pr": "#1980",
+      "when": "Aug 2026",
+      "what": "A price written as 12,50 fails the whole import instead of being read as 12.50.",
+      "example": "isbn,title,price\n9780000000011,The Quiet Harbour,\"12,50\"",
+      "result": "Import stops at that row; nothing after it is saved.",
+      "tested": "Uploaded a 3-row CSV on a local copy of production data."
+    },
+    {
+      "n": 2,
+      "title": "Blank author creates an empty author record",
+      "release": true,
+      "review": true,
+      "pr": "#1712",
+      "when": "May 2026",
+      "what": "A row with no author creates an author with an empty name and links the book to it.",
+      "example": "isbn,title,author\n9780000000028,Paper Lanterns,",
+      "result": "An unnamed author shows up on the storefront.",
+      "tested": "Imported the row, then opened the book page."
+    },
+    {
+      "n": 3,
+      "title": "Duplicate ISBNs in one file overwrite each other",
+      "release": false,
+      "review": true,
+      "pr": "#2104",
+      "when": "Sep 2026",
+      "what": "Two rows with the same ISBN in one file: the second silently replaces the first.",
+      "example": "isbn,title,price\n9780000000035,North Sea Tales,9.50\n9780000000035,North Sea Tales,10.50",
+      "result": "Only 10.50 is kept, with no warning.",
+      "tested": "Ran the importer spec with a duplicate row added."
+    }
+  ],
+  "concepts": [
+    {
+      "term": "Background job",
+      "line": "Slow work (reading a PDF) runs outside the web request, so the page answers straight away.",
+      "pic": "web ──► queue ──► worker\n  └─ 200 OK      (reads file)",
+      "tickets": [
+        "NB-421"
+      ]
+    },
+    {
+      "term": "Feature flag",
+      "line": "A switch that turns new code on per store, so it can ship dark and roll out slowly.",
+      "pic": "if flag(:gift_langs, store)\n  new path\nelse\n  old path",
+      "tickets": [
+        "NB-412"
+      ]
+    },
+    {
+      "term": "Draft table",
+      "line": "Rows the reader found are saved as drafts first; nothing touches the catalog until approved.",
+      "pic": "file ─► drafts ─► review ─► catalog",
+      "tickets": [
+        "NB-421"
+      ]
+    },
+    {
+      "term": "i18n",
+      "line": "Each piece of text lives in a translation file per language instead of in the code.",
+      "pic": "t('gift.hello')\n en: Hello  de: Hallo",
+      "tickets": [
+        "NB-412"
+      ]
+    },
+    {
+      "term": "Presigned URL",
+      "line": "A short-lived link that lets the browser upload straight to file storage.",
+      "pic": "browser ──PUT──► bucket\n   ▲ link valid 10 min",
+      "tickets": [
+        "NB-421"
+      ]
+    },
+    {
+      "term": "N+1 query",
+      "line": "Loading a list, then one extra query per row; fixed by loading the related rows together.",
+      "pic": "1 query (books)\n+ N queries (authors) ✗\n→ includes(:author) ✓",
+      "tickets": []
+    },
+    {
+      "term": "Idempotency",
+      "line": "Running the same thing twice gives the same result, so retries are safe.",
+      "pic": "import(file) ×2 ─► 40 books, not 80",
+      "tickets": [
+        "NB-421"
+      ]
+    },
+    {
+      "term": "Scoped query",
+      "line": "Every lookup starts from what the user is allowed to see.",
+      "pic": "current_user.warehouses\n  .find(id)  ✓\nWarehouse.find(id) ✗",
+      "tickets": [
+        "NB-430"
+      ]
+    },
+    {
+      "term": "Migration",
+      "line": "A versioned change to the database shape, run once on every environment.",
+      "pic": "v41 ─► add_column ─► v42",
+      "tickets": [
+        "NB-421"
+      ]
+    },
+    {
+      "term": "OCR",
+      "line": "Reading text out of an image or a scanned PDF.",
+      "pic": "[photo] ─► \"Quiet Harbour 14.99\"",
+      "tickets": [
+        "NB-421"
+      ]
+    }
+  ],
+  "timeline": [
+    {
+      "date": "2026-10-26",
+      "items": [
+        [
+          "NB-418",
+          "Review meeting held; default amounts agreed, max buttons still open"
+        ],
+        [
+          "NB-421",
+          "Review grid started on the branch"
+        ]
+      ]
+    },
+    {
+      "date": "2026-10-23",
+      "items": [
+        [
+          "NB-412",
+          "PR #2291 opened"
+        ],
+        [
+          "NB-430",
+          "Plan drafted"
+        ],
+        [
+          "",
+          "Sprint 14 ends Monday"
+        ]
+      ]
+    },
+    {
+      "date": "2026-10-22",
+      "items": [
+        [
+          "NB-421",
+          "Background job reads a 40-line PDF in about 12 s"
+        ],
+        [
+          "NB-418",
+          "Mockup v2 shared"
+        ]
+      ]
+    },
+    {
+      "date": "2026-10-21",
+      "items": [
+        [
+          "NB-421",
+          "Spec published"
+        ],
+        [
+          "NB-412",
+          "18 specs green"
+        ]
+      ]
+    },
+    {
+      "date": "2026-10-19",
+      "items": [
+        [
+          "NB-421",
+          "Product approval from Priya"
+        ],
+        [
+          "",
+          "Found 3 bugs in the CSV import"
+        ]
+      ]
+    },
+    {
+      "date": "2026-10-16",
+      "items": [
+        [
+          "NB-412",
+          "Plan approved; built behind a flag"
+        ],
+        [
+          "",
+          "First week on northwind-web"
+        ]
+      ]
+    }
+  ],
+  "repos": [
+    {
+      "id": "mailer",
+      "name": "mailer-service",
+      "icon": "mail",
+      "about": "The small service that renders and sends every shopper email.",
+      "notes": "notes/mailer-service.md"
+    }
+  ],
+  "upcoming": [
+    {
+      "title": "NB-421 review grid",
+      "note": "aim: PR by 30 Oct"
+    },
+    {
+      "title": "Japanese gift messages",
+      "note": "after the NB-412 pilot"
+    }
+  ],
+  "meeting": {
+    "nav": "Meeting",
+    "date": "2026-10-26",
+    "eyebrow": "Mon 26 Oct · product review",
+    "title": "Product review: gift cards and imports",
+    "purpose": "Close the open questions on NB-418 and NB-421 so both can move to the spec.",
+    "opening": "Two tickets, three decisions each; screenshots are on screen as we go.",
+    "collection": "meeting_2026_10_26",
+    "tickets": [
+      {
+        "id": "NB-418",
+        "title": "Preset gift card amounts",
+        "what": "One tap on a preset amount instead of typing one.",
+        "strip": [
+          {
+            "img": "assets/giftcard-mock.svg",
+            "cap": "Mockup v2"
+          }
+        ],
+        "rows": [
+          {
+            "key": "amounts",
+            "q": "Which default amounts?",
+            "propose": "10 · 25 · 50 · 100",
+            "fallback": "Let each store set them",
+            "shots": []
+          },
+          {
+            "key": "max",
+            "q": "How many buttons at most?",
+            "propose": "5",
+            "fallback": "4 on mobile, 6 on desktop",
+            "shots": []
+          },
+          {
+            "key": "custom",
+            "q": "Keep a custom amount?",
+            "propose": "Yes, below the buttons",
+            "fallback": "Only above 100",
+            "shots": []
+          }
+        ]
+      },
+      {
+        "id": "NB-421",
+        "title": "Import a catalog from a supplier PDF",
+        "what": "Supplier file in, review grid out.",
+        "refs": [
+          {
+            "label": "Spec",
+            "url": "https://example.com/specs/nb-421"
+          }
+        ],
+        "rows": [
+          {
+            "key": "where",
+            "q": "Where does the card live?",
+            "propose": "Next to the CSV import",
+            "fallback": "Its own menu item",
+            "shots": [
+              {
+                "img": "assets/import-after-1.svg",
+                "cap": "Next to the CSV import"
+              }
+            ]
+          },
+          {
+            "key": "prices",
+            "q": "Update existing prices automatically?",
+            "propose": "No: show old → new and ask",
+            "fallback": "Yes, with an undo",
+            "shots": [
+              {
+                "img": "assets/import-after-2.svg",
+                "cap": "Update rows"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "ops": {
+      "title": "For Operations",
+      "groups": [
+        {
+          "ticket": "NB-421",
+          "title": "Real supplier files",
+          "items": [
+            {
+              "key": "files",
+              "text": "Can Ops share 5 real supplier PDFs for testing?"
+            }
+          ]
+        }
+      ]
+    },
+    "devops": [
+      {
+        "key": "bucket",
+        "text": "New storage bucket for uploaded supplier files (private, 30-day expiry)."
+      }
+    ],
+    "devopsTitle": "For DevOps",
+    "questions": [
+      [
+        "Why not just fix the CSV import?",
+        "We are: bugs 1–3 are separate tickets. This is for suppliers who only send PDFs."
+      ]
+    ],
+    "after": [
+      "Post decisions on NB-418 and NB-421",
+      "Update both mockups",
+      "Book the spec review"
+    ]
+  }
+}
